@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 
 
-
-class ListBooks extends Component {
-
+class SearchBooks extends Component {
 
   render() {
 
-    const {booklist, onMoveBook, shelfTitle } = this.props
+    const {searchlist, onMoveBook, shelfTitle } = this.props
 
     return (
 
@@ -19,26 +17,22 @@ class ListBooks extends Component {
 <div className="books-grid">
 
 
-{this.props.booklist.map((book) => (
+{this.props.searchlist.map((book) => (
        <div className="book" key={book.id}>
                <div className="book-top">
-               <a href={book.infoLink} target="_blank" title="click for info">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
-                  </a>
-                 <div className="book-shelf-changer" title="click to move shelf">
+                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
+                 <div className="book-shelf-changer">
                    <select
                      value={book.shelf}
                      onChange={(event) => this.props.onMoveBook(book, event.target.value)}
                      >
-                     <option value="none" disabled>Move to...</option>
+                     <option value="none" disabled>Add to...</option>
                      <option value="currentlyReading">Currently Reading</option>
                      <option value="wantToRead">Want to Read</option>
                      <option value="read">Read</option>
-                     <option value="none">None</option>
                    </select>
                  </div>
                </div>
-
                <div className="book-title">{book.title}</div>
                <div className="book-authors">{(book.authors).toString()
                }</div>
@@ -65,4 +59,4 @@ class ListBooks extends Component {
  }
 }
 
-export default ListBooks
+export default SearchBooks
