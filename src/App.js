@@ -28,7 +28,6 @@ class BooksApp extends Component {
     this.setState(state => {
       book.shelf=shelf
       if (shelf === "none") { state.foundbooks.concat([book])}
-
     })
     BooksAPI.update(book, shelf).then(this.getBooks)
   }
@@ -65,7 +64,7 @@ class BooksApp extends Component {
                 <input
                   className="search-books-bar"
                   type="text"
-                  placeholder="Search books"
+                  placeholder="Search"
                   onChange={(event) => this.findBook(event.target.value, 5)}
                 />
               </div>
