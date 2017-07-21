@@ -11,8 +11,7 @@ This app was built to submit as my first assessment project for Udacity's React 
 * open a shell console
 * cd to the project folder
 * first time type
-   npm install -g create-react-app
-   npm install --save react-router-dom
+   npm install
    npm start
 
    this will open localhost:3000 with live updates of the app.

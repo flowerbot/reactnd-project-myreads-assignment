@@ -24,23 +24,25 @@ class BooksApp extends Component {
     })
   }
 
-  moveBook = (book, shelf) => {
+  moveBook=(book, shelf) => {
     this.setState(state => {
-      book.shelf = shelf
+      book.shelf=shelf
       state.books.concat([book])
     })
     BooksAPI.update(book, shelf).then(this.getBooks)
   }
 
-  findBook = (query, maxResults) => {
+  findBook=(query, maxResults) => {
     this.setState(state => {
-      if (query !== null || query.trim() !== '') {
+      if (query !== null && query.trim() !== '') {
         BooksAPI.search(query, maxResults).then(books => {
           for (const book of books) {
-            book.shelf = "none"
-            console.log(book)
+            book.shelf="none"
+            // console.log(book)
           }
-          this.setState({ foundbooks: books })
+          if (this.state.foundbooks !== books){
+              this.setState({ foundbooks: books })
+            }
         })
       } else {
         this.setState({ foundbooks: [] })
@@ -49,27 +51,27 @@ class BooksApp extends Component {
   }
 
   render() {
-    return ( <div className = "BooksApp">
-      <h1 className = "list-books-title"> My Reads </h1>
-      <Route path = "/search"
-        render = {() => (
+    return ( <div className="BooksApp">
+      <h1 className="list-books-title"> My Reads </h1>
+      <Route path="/search"
+        render={() => (
            <div>
-            <div className = "search-books-bar">
-              <Link className = "close-search" to = "/" />
-              <div className = "search-books-input-wrapper">
+            <div className="search-books-bar">
+              <Link className="close-search" to="/" />
+              <div className="search-books-input-wrapper">
                 <input
-                  className = "search-books-bar"
-                  type = "text"
-                  placeholder = "Search books"
-                  onChange = {(event) => this.findBook(event.target.value, 5)}
+                  className="search-books-bar"
+                  type="text"
+                  placeholder="Search books"
+                  onChange={(event) => this.findBook(event.target.value, 5)}
                 />
               </div>
             </div>
             <div>
 
-            <SearchBooks shelfTitle = "Search Results"
-              onMoveBook = { this.moveBook }
-              searchlist = { this.state.foundbooks.filter((books) => books.shelf === 'none')}
+            <SearchBooks shelfTitle="Search Results"
+              onMoveBook={ this.moveBook }
+              searchlist={ this.state.foundbooks.filter((books) => books.shelf === 'none')}
             />
           </div>
           </div>
@@ -77,31 +79,31 @@ class BooksApp extends Component {
         }
       />
 
-      <Route path = "/"
-        render = {() => (
+      <Route path="/"
+        render={() => (
             <div>
-              <div className = "open-search">
-              <Link to = "/search"
-                onClick = { this.getBooks }>
+              <div className="open-search">
+              <Link to="/search"
+                onClick={ this.getBooks }>
               </Link>
               </div>
               <ListBooks
-                shelfTitle = "Currently Reading"
-                onDeleteBook = { this.removeBook }
-                onMoveBook = { this.moveBook }
-                booklist = { this.state.books.filter((books) => books.shelf === 'currentlyReading') }
+                shelfTitle="Currently Reading"
+                onDeleteBook={ this.removeBook }
+                onMoveBook={ this.moveBook }
+                booklist={ this.state.books.filter((books) => books.shelf === 'currentlyReading') }
               />
               <ListBooks
-                shelfTitle = "Want To Read"
-                onDeleteBook = { this.removeBook }
-                onMoveBook = { this.moveBook }
-                booklist = { this.state.books.filter((books) => books.shelf === 'wantToRead') }
+                shelfTitle="Want To Read"
+                onDeleteBook={ this.removeBook }
+                onMoveBook={ this.moveBook }
+                booklist={ this.state.books.filter((books) => books.shelf === 'wantToRead') }
               />
               <ListBooks
-                shelfTitle = "Read"
-                onDeleteBook = { this.removeBook }
-                onMoveBook = { this.moveBook }
-                booklist = { this.state.books.filter((books) => books.shelf === 'read') }
+                shelfTitle="Read"
+                onDeleteBook={ this.removeBook }
+                onMoveBook={ this.moveBook }
+                booklist={ this.state.books.filter((books) => books.shelf === 'read') }
               />
             </div>
           )
