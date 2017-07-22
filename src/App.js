@@ -79,7 +79,7 @@ class BooksApp extends Component {
         }
       />
 
-      <Route path="/"
+      <Route path="/" exact
         render={() => (
             <div>
               <div className="open-search">

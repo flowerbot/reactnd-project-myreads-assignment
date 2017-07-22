@@ -33,10 +33,10 @@ class SearchBooks extends Component {
                                  </div>
                              </div>
                              <div className="book-title">{book.title}</div>
-                             <div className="book-authors">{book.authors.map ((name, i, arr) => {
+                             <div className="book-authors">{book.authors.map((name, i, arr) => {
                                 let separator = ", "
                                 if(i === arr.length-2) { separator = " and "}
-                                if(arr.length === i+1) {separator = ""}
+                                if(i === arr.length-1) {separator = ""}
                                 return name + separator
                              })}</div>
                            </div>
