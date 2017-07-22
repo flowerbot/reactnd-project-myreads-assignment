@@ -36,14 +36,19 @@ class BooksApp extends Component {
     this.setState(state => {
       if (query !== null && query.trim() !== '') {
         BooksAPI.search(query, maxResults).then(books => {
-          for (const book of books) {
-            book.shelf="none"
-            // console.log(book)
-          }
-          if (this.state.foundbooks !== books){
-              this.setState({ foundbooks: books })
+          if (books.length > 0) {
+          //  books => {
+            for (const book of books) {
+              book.shelf="none"
+              // console.log(book)
             }
-        })
+            if (books.length > 0 && this.state.foundbooks !== books){
+                this.setState({ foundbooks: books })
+              }
+          }
+        }
+      )
+
       } else {
         this.setState({ foundbooks: [] })
       }
