@@ -37,18 +37,16 @@ class BooksApp extends Component {
       if (query !== null && query.trim() !== '') {
         BooksAPI.search(query, maxResults).then(books => {
           if (books.length > 0) {
-          //  books => {
             for (const book of books) {
+              console.log(book)
               book.shelf="none"
-              // console.log(book)
+            //  if(!book.hasownProperty("smallThumbnail")) { console.log("missing thumbnail")}
             }
             if (books.length > 0 && this.state.foundbooks !== books){
                 this.setState({ foundbooks: books })
               }
           }
-        }
-      )
-
+        })
       } else {
         this.setState({ foundbooks: [] })
       }
@@ -76,7 +74,7 @@ class BooksApp extends Component {
 
             <SearchBooks shelfTitle="Search Results"
               onMoveBook={ this.moveBook }
-              searchlist={ this.state.foundbooks.filter((books) => books.shelf === 'none')}
+              searchlist={ this.state.foundbooks.filter((books) => books.shelf === 'none') }
             />
           </div>
           </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 
 class SearchBooks extends Component {
 
@@ -8,9 +8,7 @@ class SearchBooks extends Component {
     const { shelfTitle } = this.props
 
     return (
-
       <div>
-
         <div className="bookshelf">
           <h2 className="bookshelf-title">{shelfTitle}</h2>
           <div className="bookshelf-books">
@@ -33,12 +31,13 @@ class SearchBooks extends Component {
                                  </div>
                              </div>
                              <div className="book-title">{book.title}</div>
-                             <div className="book-authors">{book.authors.map((name, i, arr) => {
+                             <div className="book-authors">{book.authors.map((name, i, arr)  => {
                                 let separator = ", "
                                 if(i === arr.length-2) { separator = " and "}
                                 if(i === arr.length-1) {separator = ""}
                                 return name + separator
-                             })}</div>
+
+                           })}</div>
                            </div>
                    ))}
             </div>
@@ -50,6 +49,17 @@ class SearchBooks extends Component {
 
     )
  }
+}
+
+SearchBooks.propTypes = {
+    searchlist: PropTypes.array.isRequired,
+    book: PropTypes.object.isRequired
+     /* PropTypes.shape({
+      imageLinks: PropTypes.shape({
+        smallThumbnail: PropTypes.string.isRequired
+      }),
+      authors: PropTypes.array.isRequired
+    })*/
 }
 
 export default SearchBooks
