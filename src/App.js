@@ -36,15 +36,17 @@ class BooksApp extends Component {
     this.setState(state => {
       if (query !== null && query.trim() !== '') {
         BooksAPI.search(query, maxResults).then(books => {
-          if (books.length > 0) {
-            for (const book of books) {
-              console.log(book)
-              book.shelf="none"
-            //  if(!book.hasownProperty("smallThumbnail")) { console.log("missing thumbnail")}
-            }
-            if (books.length > 0 && this.state.foundbooks !== books){
-                this.setState({ foundbooks: books })
+          if (books !== undefined)
+          {
+            if (books.length > 0) {
+              for (const book of books) {
+              //  console.log(book)
+                book.shelf="none"
               }
+              if (books.length > 0 && this.state.foundbooks !== books){
+                  this.setState({ foundbooks: books })
+                }
+            }
           }
         })
       } else {

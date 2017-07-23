@@ -44,22 +44,13 @@ class SearchBooks extends Component {
           </div>
         </div>
       </div>
-
-
-
     )
  }
 }
 
 SearchBooks.propTypes = {
     searchlist: PropTypes.array.isRequired,
-    book: PropTypes.object.isRequired
-     /* PropTypes.shape({
-      imageLinks: PropTypes.shape({
-        smallThumbnail: PropTypes.string.isRequired
-      }),
-      authors: PropTypes.array.isRequired
-    })*/
+    book: PropTypes.object
 }
 
 export default SearchBooks

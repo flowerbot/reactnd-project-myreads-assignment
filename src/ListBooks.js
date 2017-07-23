@@ -49,9 +49,6 @@ class ListBooks extends Component {
         </div>
       </div>
     </div>
-
-
-
     )
  }
 }
