@@ -25,26 +25,30 @@ class BooksApp extends Component {
   }
 
   moveBook=(book, shelf) => {
-    this.setState(state => {
-      book.shelf=shelf
-      state.books.concat([book])
+    BooksAPI.update(book, shelf).then(() => {
+      book.shelf = shelf
+      this.setState(state => ({
+        books: state.books.filter(b => b.id !== book.id).concat([book])
+      }))
     })
-    BooksAPI.update(book, shelf).then(this.getBooks)
   }
 
   findBook=(query, maxResults) => {
     this.setState(state => {
       if (query !== null && query.trim() !== '') {
-        BooksAPI.search(query, maxResults).then(books => {
-          if (books !== undefined)
-          {
-            if (books.length > 0) {
-              for (const book of books) {
-              //  console.log(book)
-                book.shelf="none"
+        BooksAPI.search(query, maxResults).then(resultbooks => {
+          if (resultbooks !== undefined) {
+            if (resultbooks.length > 0) {
+              for (const resultbook of resultbooks) {
+                  resultbook.shelf="none"
+                for(const book of this.state.books) {
+                   if (book.id === resultbook.id) {
+                     resultbook.shelf = book.shelf
+                   }
+                }
               }
-              if (books.length > 0 && this.state.foundbooks !== books){
-                  this.setState({ foundbooks: books })
+              if (resultbooks.length > 0 && this.state.foundbooks !== resultbooks){
+                  this.setState({ foundbooks: resultbooks })
                 }
             }
           }
@@ -76,7 +80,7 @@ class BooksApp extends Component {
 
             <SearchBooks shelfTitle="Search Results"
               onMoveBook={ this.moveBook }
-              searchlist={ this.state.foundbooks.filter((books) => books.shelf === 'none') }
+              searchlist={ this.state.foundbooks }
             />
           </div>
           </div>
