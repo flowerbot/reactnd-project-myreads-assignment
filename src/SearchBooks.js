@@ -17,7 +17,9 @@ class SearchBooks extends Component {
               {this.props.searchlist.map((book) => (
                      <div className="book" key={book.id}>
                              <div className="book-top">
+                              <a href={book.infoLink} target="_blank" title="click for info">
                                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})`}}></div>
+                               </a>
                                  <div className="book-shelf-changer">
                                    <select
                                      value={book.shelf}
@@ -37,7 +39,8 @@ class SearchBooks extends Component {
                                 if(i === arr.length-1) {separator = ""}
                                 return name + separator
 
-                           })}</div>
+                           })
+                         }</div>
                            </div>
                    ))}
             </div>

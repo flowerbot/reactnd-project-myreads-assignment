@@ -33,30 +33,45 @@ class BooksApp extends Component {
     })
   }
 
-  findBook=(query, maxResults) => {
-    this.setState(state => {
-      if (query !== null && query.trim() !== '') {
-        BooksAPI.search(query, maxResults).then(resultbooks => {
-          if (resultbooks !== undefined) {
-            if (resultbooks.length > 0) {
-              for (const resultbook of resultbooks) {
-                  resultbook.shelf="none"
-                for(const book of this.state.books) {
-                   if (book.id === resultbook.id) {
-                     resultbook.shelf = book.shelf
-                   }
+  findBook = (query, maxResults) => {
+  	this.setState(state => {
+  		if (query !== null && query.trim() !== '') {
+  			BooksAPI.search(query, maxResults).then(resultbooks => {
+  				if (resultbooks !== undefined) {
+  					if (resultbooks.length > 0) {
+  						const results = new Set()
+  						const resultsArray = []
+  						for (const resultbook of resultbooks) {
+  							results.add(resultbook.id);
+  						}
+  						for (const result of results) {
+  							let book = resultbooks.filter(r => r.id === result)
+  							resultsArray.push(book[0])
+  						}
+  						for (const resultbook of resultsArray) {
+                if(resultbook.hasOwnProperty('authors') === false) {
+                  resultbook.authors = ["Unknown"]
                 }
-              }
-              if (resultbooks.length > 0 && this.state.foundbooks !== resultbooks){
-                  this.setState({ foundbooks: resultbooks })
+                if(resultbook.imageLinks.hasOwnProperty('smallThumbnail') === false) {
+                  resultbook.imageLinks.smallThumbnail = ["#"]
                 }
-            }
-          }
-        })
-      } else {
-        this.setState({ foundbooks: [] })
-      }
-    })
+  							resultbook.shelf = "none"
+  							for (const book of this.state.books) {
+  								if (book.id === resultbook.id) {
+  									resultbook.shelf = book.shelf
+  								}
+  							}
+  						}
+  						if (resultsArray.length > 0 && this.state.foundbooks !== resultsArray) {
+  							this.setState({ foundbooks: resultsArray })
+  						}
+  					}
+  				}
+  			}).catch((err) => {})
+  		} else {
+  			this.setState({ foundbooks: [] })
+  		}
+  	})
   }
 
   render() {
